@@ -14,7 +14,8 @@ class Asteroid(CircleShape):
         pygame.draw.circle(screen, "white", self.position, self.radius, width = 2)
 
     def update(self, dt):
-        self.position += (self.velocity * dt)
+        self.position += self.velocity * dt
+        self.wrap_screen()
 
     def split(self):
         self.kill()
@@ -31,3 +32,13 @@ class Asteroid(CircleShape):
             # ... do the same for asteroid2 ...
             rotated_velocity2 = self.velocity.rotate(-random_angle) * 1.2
             asteroid2.velocity = rotated_velocity2
+        
+    def wrap_screen(self):
+        if self.position.x < 0:
+            self.position.x = SCREEN_WIDTH
+        elif self.position.x > SCREEN_WIDTH:
+            self.position.x = 0
+        if self.position.y < 0:
+            self.position.y = SCREEN_HEIGHT
+        elif self.position.y > SCREEN_HEIGHT:
+            self.position.y = 0
