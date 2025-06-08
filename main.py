@@ -8,10 +8,14 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
+from scenes import run_intro
 
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+    # Run animated intro before the main game loop
+    run_intro(screen)
 
     clock = pygame.time.Clock()
     dt = 0
@@ -28,10 +32,6 @@ def main():
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, shot)
 
-    
-
-    
-
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -39,7 +39,7 @@ def main():
 
         screen.fill("black")
         dt = clock.tick(60) / 1000
-        
+
         updatable.update(dt)
 
         for aster in asteroid:
@@ -51,13 +51,12 @@ def main():
         for aster in asteroid:
             if player.collision_check(aster):
                 print("Game over!")
-                sys.exit() 
+                sys.exit()
 
         for sprite in drawable:
             sprite.draw(screen)
 
         pygame.display.flip()
-        
 
 if __name__ == "__main__":
     main()
